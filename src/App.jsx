@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-function App() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+import React, { useEffect } from "react";
+import { useState } from "react";
+
+export default function App() {
+  const [property, setProperty] = useState("posts");
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      setPosts(res.data);
-      setLoading(false);
-    };
-    fetchPosts();
-  }, []);
-
-  console.log(posts);
-
-  return <div></div>;
+    fetch(`https://jsonplaceholder.typicode.com/${property}`)
+      .then((response) => response.json())
+      .then((json) => setItems(json));
+  });
+  return (
+    <>
+      <div>
+        <button onClick={() => setProperty("Users")}>Users</button>
+        <button onClick={() => setProperty("Posts")}>Posts</button>
+        <button onClick={() => setProperty("Comments")}>Comments</button>
+      </div>
+      <h1>{property}</h1>
+      {items.map((item) => {
+        return <pre>{JSON.stringify(item)}</pre>;
+      })}
+    </>
+  );
 }
-
-export default App;
