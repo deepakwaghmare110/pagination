@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import react, { useEffect, useState } from "react";
 
 export default function App() {
-  const [property, setProperty] = useState("posts");
-  const [items, setItems] = useState([]);
+  const [value, setValue] = useState(0);
 
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/${property}`)
-      .then((response) => response.json())
-      .then((json) => setItems(json));
-  });
   return (
-    <>
-      <div>
-        <button onClick={() => setProperty("Users")}>Users</button>
-        <button onClick={() => setProperty("Posts")}>Posts</button>
-        <button onClick={() => setProperty("Comments")}>Comments</button>
-      </div>
-      <h1>{property}</h1>
-      {items.map((item) => {
-        return <pre>{JSON.stringify(item)}</pre>;
-      })}
-    </>
+    <div className="container">
+      <h1>Counter App</h1>
+      <h2>{value}</h2>
+      <button
+        className="b1"
+        onClick={() => {
+          setValue(value + 1);
+        }}
+      >
+        Increment
+      </button>
+      <button className="b2" onClick={() => setValue(value - 1)}>
+        Decrement
+      </button>
+      <button className="b3" onClick={() => setValue(0)}>
+        Reset
+      </button>
+    </div>
   );
 }
